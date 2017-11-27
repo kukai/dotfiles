@@ -1,10 +1,25 @@
+# zsh {{{
+autoload -U compinit
+compinit
+
+export LANG=ja_JP.UTF-8
+
+bindkey -e
+
+HISTFILE=~/.zsh_history
+HISTSIZE=1000000
+SAVEHIST=1000000
+setopt extended_history
+setopt share_history
+setopt hist_ignore_dups
+# }}}
+
 # zplug {{{
 source ~/.zplug/init.zsh
 
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
-zplug "zsh-users/zsh-history-substring-search", hook-build:"__zsh_version 4.3"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-history-substring-search"
+zplug 'dracula/zsh', as:theme
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -16,36 +31,6 @@ fi
 
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
-# }}}
-
-# zsh {{{
-autoload -Uz add-zsh-hook
-autoload -Uz compinit && compinit -u
-autoload -Uz url-quote-magic
-autoload -Uz vcs_info
-
-export LANG=ja_JP.UTF-8
-
-bindkey -e
-
-HISTFILE=~/.zsh_history
-HISTSIZE=1000000
-SAVEHIST=1000000
-setopt extended_history
-setopt share_history
-setopt extended_history
-setopt hist_ignore_all_dups
-setopt hist_ignore_dups
-setopt hist_reduce_blanks
-setopt hist_save_no_dups
-setopt interactive_comments
-setopt prompt_subst
-setopt rm_star_wait
-setopt auto_list
-setopt auto_menu
-setopt auto_pushd
-
-zle -N self-insert url-quote-magic
 # }}}
 
 # zsh-history-substring-search {{{
@@ -69,13 +54,30 @@ case ${OSTYPE} in
 esac
 # }}}
 
-# go {{{
-export GOPATH=$HOME
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-export GHQ_ROOT=$GOPATH
+# vim {{{
+case ${OSTYPE} in
+  darwin*)
+    if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
+      #alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+      #alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+    fi
+    ;;
+  linux*)
+    ;;
+esac
 # }}}
 
-# ghq + peco {{{
+# go {{{
+export PATH="$HOME/.goenv/bin:$PATH"
+eval "$(goenv init -)"
+export GOPATH=$HOME
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+# }}}
+
+# ghq {{{
+export GHQ_ROOT=$GOPATH/src
+
+ #ghq + peco
 function peco-src () {
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
@@ -101,42 +103,9 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
-# }}}
 
-# git branch + peco {{{
+# git branch + peco
 alias -g B='`git branch | peco | sed -e "s/^\*[ ]*//g"`'
-# }}}
-
-# aws {{{
-if [ -f /usr/local/share/zsh/site-functions/_aws ];then
-  source /usr/local/share/zsh/site-functions/_aws
-elif [ -f /usr/local/bin/aws_zsh_completer.sh ]; then
-  source /usr/local/bin/aws_zsh_completer.sh
-fi
-# }}}
-
-# apex {{{
-_apex()  {
-  COMPREPLY=()
-  local cur="${COMP_WORDS[COMP_CWORD]}"
-  local opts="$(apex autocomplete -- ${COMP_WORDS[@]:1})"
-  COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
-  return 0
-}
-
-complete -F _apex apex
-# }}}
-
-# nvm {{{
-export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
-# }}}
-
-# python {{{
-export PYENV_ROOT=/usr/local/var/pyenv
-export PATH=${PYENV_ROOT}/bin:$PATH
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 # }}}
 
 # import local settings {{{
