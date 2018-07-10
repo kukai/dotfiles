@@ -22,6 +22,10 @@ if [ ! -d ~/.nodebrew ]; then
   nodebrew use stable
 fi
 
+if [ ! -d ~/.pyenv ]; then
+  git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+fi
+
 if [ ! -d ~/.zplug ]; then
   curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
 fi

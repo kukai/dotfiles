@@ -131,6 +131,11 @@ zle -N peco-find
 bindkey '^[' peco-find
 # }}}
 
+# pyenv {{{
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+# }}}
+
 # import local settings {{{
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
