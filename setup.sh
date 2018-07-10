@@ -24,6 +24,11 @@ fi
 
 if [ ! -d ~/.pyenv ]; then
   git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+  git clone https://github.com/yyuu/pyenv-pip-rehash.git ~/.pyenv/plugins/pyenv-pip-rehash
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  pyenv install 2.7.9
+  pyenv global 2.7.9
 fi
 
 if [ ! -d ~/.zplug ]; then
