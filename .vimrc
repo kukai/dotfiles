@@ -10,13 +10,6 @@ Plug 'Shougo/unite-outline'
 Plug 'kmnk/vim-unite-giti'
 Plug 'easymotion/vim-easymotion'
 " Plug 'Shougo/neocomplete.vim'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'
@@ -120,11 +113,6 @@ nmap <F10> :TagbarToggle<CR>
 " inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 " inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " " }}}
-
-" deoplete {{{
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-" }}}
 
 " giti {{{
 let g:fugitive_git_executable = executable('hub') ? 'hub' : 'git'
