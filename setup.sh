@@ -11,6 +11,11 @@ if [ ! -d ~/.tmux/plugins/tpm ]; then
   git clone https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
 fi
 
+if [ ! -d ~/.nix-profile ]; then
+  curl https://nixos.org/nix/install | sh
+  nix-env -i zsh vim tmux
+fi
+
 if [ ! -d ~/.goenv ]; then
   goenv install 1.10.0
   goenv global 1.10.0
