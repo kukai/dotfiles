@@ -13,7 +13,7 @@ fi
 
 if [ ! -d ~/.nix-profile ]; then
   curl https://nixos.org/nix/install | sh
-  nix-env -i zsh vim tmux jq
+  nix-env -i zsh vim tmux jq tig
 fi
 
 if [ ! -d ~/.goenv ]; then
