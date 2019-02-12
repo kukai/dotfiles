@@ -58,8 +58,7 @@ esac
 case ${OSTYPE} in
   darwin*)
     if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
-      #alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-      #alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+      alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
     fi
     ;;
   linux*)
@@ -152,6 +151,11 @@ pyenv() {
     command pyenv "$command" "$@";;
   esac
 }
+# }}}
+
+# rbenv {{
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 # }}}
 
 # import local settings {{{
