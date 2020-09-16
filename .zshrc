@@ -7,8 +7,8 @@ export LANG=ja_JP.UTF-8
 bindkey -e
 
 HISTFILE=~/.zsh_history
-HISTSIZE=1000000
-SAVEHIST=1000000
+HISTSIZE=999999999
+SAVEHIST=999999999
 setopt extended_history
 setopt share_history
 setopt hist_ignore_dups
@@ -153,7 +153,7 @@ pyenv() {
 }
 # }}}
 
-# rbenv {{
+# rbenv {{{
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 # }}}
