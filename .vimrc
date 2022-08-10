@@ -167,7 +167,8 @@ endfunction
 " }}}
 
 " auto-ctags {{{
-let g:auto_ctags = 1
+" 保存時にtagsファイルを生成する:1 しない:0 -> 手動で生成する :Ctags
+let g:auto_ctags = 0
 let g:auto_ctags_directory_list = ['.git', '.svn']
 let g:auto_ctags_tags_name = 'tags'
 let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
