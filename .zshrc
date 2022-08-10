@@ -67,7 +67,7 @@ esac
 # }}}
 
 # ghq {{{
-export GHQ_ROOT=$GOPATH/src
+export GHQ_ROOT=${HOME}/src
 
  #ghq + peco
 function peco-src () {
