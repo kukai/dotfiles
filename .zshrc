@@ -66,35 +66,20 @@ case ${OSTYPE} in
 esac
 # }}}
 
-# ghq {{{
-export GHQ_ROOT=${HOME}/src
+# ghq + fzf {{{
+#   https://github.com/subaru-shoji/zsh-fzf-ghq/blob/master/zsh-fzf-ghq.plugin.zsh
+function ghq-fzf() {
+  local target_dir=$(ghq list -p | fzf --query="$LBUFFER")
 
- #ghq + peco
-function peco-src () {
-  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
+  if [ -n "$target_dir" ]; then
+    BUFFER="cd ${target_dir}"
     zle accept-line
   fi
-  zle clear-screen
-}
-zle -N peco-src
-bindkey '^]' peco-src
 
-# history + peco
-function peco-select-history() {
-  typeset tac
-  if which tac > /dev/null; then
-    tac=tac
-  else
-    tac='tail -r'
-  fi
-  BUFFER=$(fc -l -n 1 | eval $tac | peco --query "$LBUFFER")
-  CURSOR=$#BUFFER
-  zle redisplay
+  zle reset-prompt
 }
-zle -N peco-select-history
-bindkey '^r' peco-select-history
+zle -N ghq-fzf
+bindkey "^]" ghq-fzf
 
 # git branch + peco
 alias -g B='`git branch | peco | sed -e "s/^\*[ ]*//g"`'
