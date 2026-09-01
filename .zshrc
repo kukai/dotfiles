@@ -85,29 +85,6 @@ bindkey "^]" ghq-fzf
 alias -g B='`git branch | peco | sed -e "s/^\*[ ]*//g"`'
 # }}}
 
-# http://masawada.hatenablog.jp/entry/2015/02/02/210300 {{{
-# peco find directory
-function peco-find() {
-  local current_buffer=$BUFFER
-  local search_root=""
-  local file_path=""
-
-  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-    search_root=`git rev-parse --show-toplevel`
-  else
-    search_root=`pwd`
-  fi
-  file_path="$(find ${search_root} -maxdepth 5 | peco)"
-  BUFFER="${current_buffer} ${file_path}"
-  CURSOR=$#BUFFER
-  zle clear-screen
-}
-zle -N peco-find
-
-# bind keys
-bindkey '^[' peco-find
-# }}}
-
 # import local settings {{{
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
