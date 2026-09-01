@@ -22,6 +22,7 @@ Plug 'fatih/vim-go'
 Plug 'davidhalter/jedi-vim'
 Plug 'stephpy/vim-yaml'
 Plug 'Yggdroot/indentLine'
+Plug 'neoclide/jsonc.vim'
 
 call plug#end()
 " }}}
