@@ -18,3 +18,8 @@ fi
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
+
+# ~/.config/<app> directories often mix config with runtime state (logs,
+# sockets, caches), so link individual files rather than whole directories.
+mkdir -p ~/.config/herdr
+ln -fnsv $PWD/config/herdr/config.toml ~/.config/herdr/config.toml
