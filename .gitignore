@@ -1,3 +1,9 @@
 .config/gocode
 .config/nvim/.netrwhist
 .config/nvim/autoload
+
+# lazy.nvim plugin lockfile: left device-local, not synced across machines
+config/nvim/lazy-lock.json
+# safety net in case something ever writes runtime state into the tracked
+# nvim config dir instead of the XDG cache/state/data dirs
+config/nvim/.netrwhist

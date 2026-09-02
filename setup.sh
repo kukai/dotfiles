@@ -33,3 +33,9 @@ fi
 # sockets, caches), so link individual files rather than whole directories.
 mkdir -p ~/.config/herdr
 link_file $PWD/config/herdr/config.toml ~/.config/herdr/config.toml
+
+# nvim (lazy.nvim) keeps ~/.config/nvim free of runtime state (plugins,
+# cache, and session state live under ~/.local/share|cache|state/nvim),
+# so the whole directory can be linked safely.
+mkdir -p ~/.config
+link_file $PWD/config/nvim ~/.config/nvim
