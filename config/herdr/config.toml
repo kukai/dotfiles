@@ -195,10 +195,10 @@ show_agent_labels_on_pane_borders = false
 # (mirrors the old .tmux.conf status-right; kube segment intentionally dropped).
 # Command entries run on the Herdr server and refresh on their own interval.
 tab_bar_right = [
-  # Free space on the root volume
-  { type = "command", command = "df -h / | tail -1 | awk '{print $4}'", interval_seconds = 30, timeout_seconds = 5 },
-  # LAN address
-  { type = "command", command = "printf 'IP %s' \"$(ipconfig getifaddr en0 2>/dev/null || ifconfig | awk '/inet /&&$2!=\"127.0.0.1\"{print $2; exit}')\"", interval_seconds = 60, timeout_seconds = 5 },
+  # Free space on the root volume (POSIX df -P forces one line; -k for portable units)
+  { type = "command", command = "df -Pk / | awk 'NR==2{a=$4; if(a>=1048576) printf \"%.0fG\",a/1048576; else printf \"%.0fM\",a/1024}'", interval_seconds = 30, timeout_seconds = 5 },
+  # LAN address (macOS: ipconfig; Linux: ip, falling back to ifconfig)
+  { type = "command", command = "printf 'IP %s' \"$(ipconfig getifaddr en0 2>/dev/null || ip -4 -o addr show scope global 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -1 || ifconfig 2>/dev/null | awk '/inet /&&$2!=\"127.0.0.1\"{print $2; exit}')\"", interval_seconds = 60, timeout_seconds = 5 },
   # Public address
   { type = "command", command = "printf 'WAN %s' \"$(curl -s --max-time 3 httpbin.org/ip | jq -r '.origin')\"", interval_seconds = 600, timeout_seconds = 8 },
   # Zoomed-pane flag
