@@ -190,6 +190,24 @@ navigate_workspace_down = ["down", "n", "ctrl+n", "j", "ctrl+j"]
 # Background notification popup delivery
 agent_panel_sort = "spaces"
 show_agent_labels_on_pane_borders = false
+
+# tmux-style status segments at the right edge of the tab bar
+# (mirrors the old .tmux.conf status-right; kube segment intentionally dropped).
+# Command entries run on the Herdr server and refresh on their own interval.
+tab_bar_right = [
+  # Free space on the root volume
+  { type = "command", command = "df -h / | tail -1 | awk '{print $4}'", interval_seconds = 30, timeout_seconds = 5 },
+  # LAN address
+  { type = "command", command = "printf 'IP %s' \"$(ipconfig getifaddr en0 2>/dev/null || ifconfig | awk '/inet /&&$2!=\"127.0.0.1\"{print $2; exit}')\"", interval_seconds = 60, timeout_seconds = 5 },
+  # Public address
+  { type = "command", command = "printf 'WAN %s' \"$(curl -s --max-time 3 httpbin.org/ip | jq -r '.origin')\"", interval_seconds = 600, timeout_seconds = 8 },
+  # Zoomed-pane flag
+  { type = "zoom" },
+  # Date and time
+  { type = "datetime", format = "%Y-%m-%d(%a) %H:%M" },
+]
+tab_bar_right_separator = " | "
+
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
